@@ -1,7 +1,7 @@
 import requests
 import discord
 import os
-import server
+#import server
 from discord.ext import commands
 #Oak Wood: "LOG"
 #Spruce Wood: "LOG:1"
@@ -117,17 +117,21 @@ async def get_bazaar(ctx):
     counter = 0
     title = ""
     value_n = "."
+    total_profit = 0
     embedVar = discord.Embed(title="Current Flips:", description="The current NPC -> Bazaar flips.", color=0x00ff00)
     for flipped_item in flipped_items:
         if counter == 0:
             title = flipped_item[0] + " : :shopping_cart: "+flipped_item[1]+". :arrow_down: " +str(flipped_item[2])+", :arrow_up: "+str(round(flipped_item[3],3))+". :chart_with_upwards_trend: "+str(round(flipped_item[4],3))
+            total_profit += round(flipped_item[4],3)
             counter += 1
         elif counter == 1:
             value_n = "**"+flipped_item[0] + " : :shopping_cart: "+flipped_item[1]+". :arrow_down: " +str(flipped_item[2])+", :arrow_up: "+str(round(flipped_item[3],3))+". :chart_with_upwards_trend: "+str(round(flipped_item[4],3))+"**"
+            total_profit += round(flipped_item[4],3)
             embedVar.add_field(name=title, value=value_n, inline=False)
             title = ""
             value_n = "."
             counter = 0
+    embedVar.add_field(name="Total Profit: :chart_with_upwards_trend: "+str(total_profit),value="⠀", inline=False)
           
     await ctx.send(embed=embedVar)
     #string += flipped_item[0]+" from the "+flipped_item[1]+". Buy for " +str(flipped_item[2])+" sell for "+str(round(flipped_item[3],3))+". Profit is "+str(round(flipped_item[4],3))+".\n"
