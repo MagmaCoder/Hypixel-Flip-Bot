@@ -18,7 +18,7 @@ from discord.ext import commands
 #LOG_2 = Acacia
 #
 
-bot = commands.Bot(command_prefix="!")
+bot = commands.Bot(command_prefix=".")
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 def get_name(name):
@@ -111,6 +111,7 @@ async def on_ready():
 
 @bot.command()
 async def chkflps(ctx):
+    '''Check the current NPC -> Bazaar flips.'''
     await ctx.send(get_bazaar())
 
 server.server()
