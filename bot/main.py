@@ -1,7 +1,7 @@
 import requests
 import discord
 import os
-#import server
+import server
 from discord.ext import commands
 #Oak Wood: "LOG"
 #Spruce Wood: "LOG:1"
