@@ -77,7 +77,7 @@ PLAYER_API_KEY = os.getenv("HYPIXEL_TOKEN")
 DATA = {"key":PLAYER_API_KEY}
 HYPIXEL_URL = "https://api.hypixel.net/skyblock/bazaar"
 
-def get_bazaar(ctx):
+async def get_bazaar(ctx):
     Current_Bazaar_Data = requests.get(HYPIXEL_URL,DATA).json()
     products = Current_Bazaar_Data["products"]
     flipped_items = []
