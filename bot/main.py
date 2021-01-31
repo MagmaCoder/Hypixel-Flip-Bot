@@ -42,6 +42,8 @@ TRANSLATED_NAMES = {
     "RAW_FISH:2":"Raw Clownfish",
     "RAW_FISH:3":"Pufferfish",
     "SULPHUR":"Gunpowder",
+    "CARROT_ITEM":"Carrot",
+    "POTATO_ITEM":"Potato",
     }
 
 NPC_PRICES = {
@@ -61,7 +63,7 @@ NPC_PRICES = {
     "RAW_FISH:2":[1,100,"Fish Merchant"],
     "RAW_FISH:3":[1,40,"Fish Merchant"],
     "COAL":[2,8,"Mine Merchant"],
-    "COBBLESTONE":[1,3,"Mine Merchant"],
+    "COBBLESTONE":[1,2,"Builder"],
     "ICE":[1,1,"Builder or Sherry"],
     "PACKED_ICE":[1,9,"Builder or Sherry"],
     "SPIDER_EYE":[1,12,"Alchemist"],
@@ -71,6 +73,17 @@ NPC_PRICES = {
     "GRAVEL":[1,4,"Pat"],
     "GOLD_INGOT":[1,5.5,"Gold Forger"],
     "IRON_INGOT":[1,5,"Iron Forger"],
+    "WHEAT":[64,149,"Farm Merchant"],
+    "CARROT_ITEM":[64,149,"Farm Merchant"],
+    "POTATO_ITEM":[64,149,"Farm Merchant"],
+    "MELON":[64,128,"Farm Merchant"],
+    "PUMPKIN":[64,512,"Farm Merchant"],
+    "INK_SACK:3":[64,320,"Farm Merchant"],
+    "RED_MUSHROOM":[64,768,"Farm Merchant"],
+    "BROWN_MUSHROOM":[64,768,"Farm Merchant"],
+    "SUGAR_CANE":[64,320,"Farm Merchant"],
+    "CACTUS":[64,640,"Farm Merchant"],
+    "SAND":[64,256,"Farm Merchant"],
     }
 
 PLAYER_API_KEY = os.getenv("HYPIXEL_TOKEN")
@@ -97,12 +110,27 @@ async def get_bazaar(ctx):
                 npc_single_cost = current_npc_price[1]
             if pr_avg_sell > npc_single_cost:
                 translated_name = get_name(pr_name)
-                flipped_items.append([translated_name,current_npc_price[2],npc_single_cost,pr_avg_sell,(current_npc_price[2]*640)-(pr_avg_sell*640)])
+                flipped_items.append([translated_name,current_npc_price[2],npc_single_cost,pr_avg_sell,int((pr_avg_sell*640))-(int(npc_single_cost)*640)])
         except Exception as e:
             pass
-    await ctx.send("Current Flips:")
+    string = ""
+    counter = 0
+    title = ""
+    value_n = "."
+    embedVar = discord.Embed(title="Current Flips:", description="The current NPC -> Bazaar flips.", color=0x00ff00)
     for flipped_item in flipped_items:
-        await ctx.send(flipped_item[0]+" from the "+flipped_item[1]+". Buy for " +str(flipped_item[2])+" sell for "+str(round(flipped_item[3],3))+". Profit is "+str(round(flipped_item[4],3))+".\n")
+        if counter == 0:
+            title = flipped_item[0] + " : :shopping_cart: "+flipped_item[1]+". :arrow_down: " +str(flipped_item[2])+", :arrow_up: "+str(round(flipped_item[3],3))+". :chart_with_upwards_trend: "+str(round(flipped_item[4],3))
+            counter += 1
+        elif counter == 1:
+            value_n = "**"+flipped_item[0] + " : :shopping_cart: "+flipped_item[1]+". :arrow_down: " +str(flipped_item[2])+", :arrow_up: "+str(round(flipped_item[3],3))+". :chart_with_upwards_trend: "+str(round(flipped_item[4],3))+"**"
+            embedVar.add_field(name=title, value=value_n, inline=False)
+            title = ""
+            value_n = "."
+            counter = 0
+          
+    await ctx.send(embed=embedVar)
+    #string += flipped_item[0]+" from the "+flipped_item[1]+". Buy for " +str(flipped_item[2])+" sell for "+str(round(flipped_item[3],3))+". Profit is "+str(round(flipped_item[4],3))+".\n"
     
 @bot.event
 async def on_ready():
