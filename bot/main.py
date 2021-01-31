@@ -99,11 +99,9 @@ def get_bazaar():
                 translated_name = get_name(pr_name)
                 flipped_items.append([translated_name,current_npc_price[2],npc_single_cost,pr_avg_sell,(current_npc_price[2]*640)-(pr_avg_sell*640)])
         except:
-            pass
-    string = ""        
+            pass       
     for flipped_item in flipped_items:
-        string += flipped_item[0]+" from the "+flipped_item[1]+". Buy for " +str(flipped_item[2])+" sell for "+str(round(flipped_item[3],3))+". Profit is "+str(round(flipped_item[4],3))+".\n"
-    return string
+        await ctx.send(flipped_item[0]+" from the "+flipped_item[1]+". Buy for " +str(flipped_item[2])+" sell for "+str(round(flipped_item[3],3))+". Profit is "+str(round(flipped_item[4],3))+".\n")
     
 @bot.event
 async def on_ready():
@@ -112,7 +110,7 @@ async def on_ready():
 @bot.command()
 async def chkflps(ctx):
     '''Check the current NPC -> Bazaar flips.'''
-    await ctx.send(get_bazaar())
+    get_bazaar()
 
 server.server()
 bot.run(TOKEN)
