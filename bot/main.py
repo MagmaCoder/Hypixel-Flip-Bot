@@ -111,7 +111,7 @@ async def on_ready():
 @bot.command()
 async def chkflps(ctx):
     '''Check the current NPC -> Bazaar flips.'''
-    get_bazaar(ctx)
+    await get_bazaar(ctx)
 
 server.server()
 bot.run(TOKEN)
