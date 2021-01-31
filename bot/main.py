@@ -97,12 +97,12 @@ def get_bazaar():
                 npc_single_cost = current_npc_price[1]
             if pr_avg_sell > npc_single_cost:
                 translated_name = get_name(pr_name)
-                flipped_items.append([translated_name,current_npc_price[2],npc_single_cost,pr_avg_sell])
+                flipped_items.append([translated_name,current_npc_price[2],npc_single_cost,pr_avg_sell,(current_npc_price[2]*640)-(pr_avg_sell*640)])
         except:
             pass
     string = ""        
     for flipped_item in flipped_items:
-        string += flipped_item[0]+" from the "+flipped_item[1]+". Buy for " +str(flipped_item[2])+" sell for "+str(round(flipped_item[3],3))+"." + "\n"
+        string += flipped_item[0]+" from the "+flipped_item[1]+". Buy for " +str(flipped_item[2])+" sell for "+str(round(flipped_item[3],3))+". Profit is "+str(round(flipped_item[4],3))+".\n"
     return string
     
 @bot.event
